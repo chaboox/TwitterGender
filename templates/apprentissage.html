@@ -1,0 +1,77 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Twitter Gender</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/apprentissage">Apprentissage</a></li>
+      <li><a href="/dataset">Récolte dataset</a></li>
+      <li><a href="/unique">Prédiction unique</a></li>
+      <li><a href="/bot">Prédiction multiple</a></li>
+    </ul>
+  </div>
+</nav>
+  
+
+</body>
+</html>
+  <div class="container">
+  
+  <h3>Bienvenu sur l'interface d'apprentissage. Veuillez remplir les champs ci-dessous.</h3>
+  <p>La durée de l'apprentissage dépendra de l'algorithme choisi. Le résultat sera affiché en bas de la page.</p>
+<hr>
+<form action="/apprentissage" method="post" class="form" role="form" enctype="multipart/form-data">
+  {{ form.csrf_token() }}
+ <d1>
+   <h4><strong>Choissisez votre dataset</strong></h4>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+<dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    </dl>
+  <!--{{ wtf.form_field(form.essay_question, class='form-control', placeholder='Write down your thoughts here...') }}
+  {{ wtf.form_field(form.email_addr, class='form-control', placeholder='your@email2.com') }}
+  {{ wtf.form_field(form.email_addr2, class='form-control', placeholder='your@email2.com') }}-->
+  {{ wtf.form_field(form.min_number, class='form-control', placeholder='Valeur mininale') }}
+  {{ wtf.form_field(form.split, class='form-control', placeholder='Split size (ex : 0.2)') }}
+  {{ wtf.form_field(form.language, class='btn-primary form-control' ) }}
+  {{ wtf.form_field(form.algo, class='btn-primary form-control' ) }} 
+ 
+ <!-- {{ wtf.form_field(form.radio, class='form-control') }}-->
+  <h4><strong>Pretraitement</strong></h4>
+  {{ wtf.form_field(form.asc, class='custom-control-input') }}
+  {{ wtf.form_field(form.html_m, class='custom-control-input') }}
+  {{ wtf.form_field(form.special, class='custom-control-input') }}
+  {{ wtf.form_field(form.double_space, class='custom-control-input') }}
+  {{ wtf.form_field(form.url_, class='custom-control-input') }}
+  {{ wtf.form_field(form.stop_words, class='custom-control-input') }}
+  {{ wtf.form_field(form.emo, class='custom-control-input') }}
+  {{ wtf.form_field(form.stemmer, class='custom-control-input ') }}
+  {{ wtf.form_field(form.minuscul, class='custom-control-input') }}
+  {{ wtf.form_field(form.cross_b, class='custom-control-input') }}
+  {{ wtf.form_field(form.cross_, class='form-control', placeholder='ex: 10' ) }}
+
+  
+ </d1>
+ <p><input type=submit class='btn btn-warning btn-block'>
+</form>
+
+<hr>
+</div>
+{% endblock %}

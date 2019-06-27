@@ -1,0 +1,98 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<style>
+.my-custom-scrollbar {
+position: relative;
+height: 500px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #fce9cf; // Choose your own color here
+ }
+ .doown {
+  margin-bottom: 30px ;
+}
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Twitter Gender</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ><a href="/apprentissage">Apprentissage</a></li>
+      <li class="active"><a href="/dataset">Récolte dataset</a></li>
+      <li><a href="/unique">Prédiction unique</a></li>
+      <li><a href="/bot">Prédiction multiple</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+  <h3>Bienvenu sur l'interface d'apprentissage. Veuillez remplir les champs ci-dessous.</h3>
+  <p>La durée de l'apprentissage dépendra de l'algorithme choisi. Le résultat sera affiché en bas de la page.</p>
+<hr>
+<form action="/savecsv" method="post" class="form" role="form" enctype="multipart/form-data">
+ <input type="hidden" name="tweets" value="{{tweets}}">
+  {{ form.csrf_token() }}
+ <d1>
+   
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+<dl>
+	
+    </dl>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar doown">
+<table class="table table-striped" >
+  <thead>
+   
+    <tr class="table-secondary">
+      <th scope="col">Tweet</th>
+      <th scope="col">Class</th>
+      
+    </tr>
+
+  </thead>
+  <tbody>
+  
+    {% for tweet in tweets %}
+ <tr>
+ {% for twee in tweet %}
+       <td>{{twee}}</td>
+       {% endfor %}
+     
+    </tr>
+		
+     {% endfor %}
+ 
+  </tbody>
+</table>
+
+</div>
+ 
+
+
+ {{ wtf.form_field(form.typef, class='btn-primary form-control' ) }} 
+  
+ </d1>
+ <p><input type=submit class='btn btn-warning btn-block'>
+</form>
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong> {{precision}} </strong>
+</div>
+<hr>
+</div>
+{% endblock %}

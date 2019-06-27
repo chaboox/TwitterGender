@@ -1,0 +1,37 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Twitter Gender</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/apprentissage">Apprentissage</a></li>
+      <li><a href="/dataset">Récolte dataset</a></li>
+      <li><a href="/unique">Prédiction unique</a></li>
+      <li class="active"><a href="/bot">Prédiction multiple</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+  <h3>Veuillez choisir la langue des tweets, l'algorithme souhaité, ainsi que la durée de collecte.</h3>
+  <p>Vous allez assister à la collecte de données sur Twitter en temps réel!</p>
+<hr>
+<form action="/resultbot" method="post" class="form" role="form">
+  {{ form.csrf_token() }}
+ <d1>
+  <!--{{ wtf.form_field(form.essay_question, class='form-control', placeholder='Write down your thoughts here...') }}
+  {{ wtf.form_field(form.email_addr, class='form-control', placeholder='your@email2.com') }}
+  {{ wtf.form_field(form.email_addr2, class='form-control', placeholder='your@email2.com') }}-->
+  {{ wtf.form_field(form.language, class='btn-primary form-control' ) }}
+  {{ wtf.form_field(form.algo, class='btn-primary form-control' ) }} 
+  {{ wtf.form_field(form.time, class='form-control', placeholder='Durée') }}
+  
+ </d1>
+ <p><input type=submit class='btn btn-warning btn-block'>
+</form>
+<hr>
+
+</div>
+{% endblock %}
