@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect
 from flask_bootstrap import Bootstrap
 from models import QuizForm, BotForm, unique_f, Dataset
-from mymodel import lr_predict, lr_predict_table
+from mymodel import lr_predict, lr_predict_table, predict_with_model, model_predict_table
 import sys
 import csv
 from twitter import getTweets, getTweets2
@@ -21,6 +21,7 @@ import xlsxwriter
 from sklearn.externals.joblib import dump
 from sklearn.externals.joblib import load
 import json
+import numpy as np
 class Config(object):
     SECRET_KEY = '78w0o5tuuGex5Ktk8VvVDF9Pw3jv1MVE'
 lastModel = None
@@ -73,11 +74,28 @@ def result():
    
     #form.tweet. = 'ada'
     if request.method == 'POST':
-         if lr_predict(request.form['tweet']) == '1':
-             se = 'Homme'
-         else:
-            se = 'Femme'
-         return render_template('unique_result.html', form=form, gender = se)
+        if 'file' not in request.files:
+            if lr_predict(request.form['tweet'], request.form['algo'], request.form['language']) == '1':
+                se = 'Homme'
+            else:
+                se = 'Femme'
+        else:
+            file = request.files['file']
+            if file.filename == '':
+                if lr_predict(request.form['tweet'], request.form['algo'], request.form['language']) == '1':
+                    se = 'Homme'
+                else:
+                    se = 'Femme'
+            elif file and allowed_file(file.filename):
+                 if predict_with_model(file.filename, request.form['tweet']) == '1':
+                     se = 'Homme'
+                 else:
+                     se = 'Femme'
+            elif lr_predict(request.form['tweet'], request.form['algo'], request.form['language']) == '1':
+                 se = 'Homme'
+            else:
+                se = 'Femme'
+        return render_template('unique_result.html', form=form, gender = se)
      
 @application.route('/dataset', methods=['GET', 'POST'])
 def dataset():
@@ -111,10 +129,13 @@ def datasetr():
    # tweets = ["Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies"]
     #form.tweet. = 'ada'
     #y = ["Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies", "Bonjour la famillle ca va !?", "Adaaam ca fait una bail", "oh la la les homme tous les meme", "Bonjouuuuuuuuuuuuuuuuuuuur mes amies"]
-    
+    y2 = np.array(y)    
+    f = np.count_nonzero(y2 == 0)
+    h = np.count_nonzero(y2 == 1)
+    detail = [len(y), f, h]  
     #flash(str(request.form))
     if request.method == 'POST':
-         return render_template('datasetresult.html', form=form, tweets=tweets)
+         return render_template('datasetresult.html', form=form, tweets=tweets, detail=detail)
      
 @application.route('/savecsv', methods=['GET', 'POST'])
 def savecsv():
@@ -171,7 +192,17 @@ def resultbot():
     form = BotForm(request.form)
     (tweets, y) = getTweets(int(request.form['time']))
     #acc = accuracy_score(lr_predict_table(tweets),y)
-    yp = lr_predict_table(tweets)
+    if 'file' not in request.files:
+            yp = lr_predict_table(tweets, request.form['algo'], request.form['language'])
+    else:
+        file = request.files['file']
+        if file.filename == '':
+            yp = lr_predict_table(tweets, request.form['algo'], request.form['language'])
+        elif file and allowed_file(file.filename):
+            yp =model_predict_table(tweets)
+        else:
+            yp = lr_predict_table(tweets, request.form['algo'], request.form['language'])
+    #yp = lr_predict_table(tweets)
     i=0
     right_prediction = 0
     array = []
@@ -289,7 +320,7 @@ def upload_file():
 
 if __name__ == '__main__':
            
-    ALLOWED_EXTENSIONS = set(['csv', 'xlsx'])
+    ALLOWED_EXTENSIONS = set(['csv', 'xlsx','pkl'])
     UPLOAD_FOLDER = 'D:/uploads'
     application.secret_key = "secret key"
     application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

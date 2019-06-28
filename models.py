@@ -39,10 +39,11 @@ class BotForm(FlaskForm):
         email_addr2 = TextField('Enter Your Email2', validators=[InputRequired(), Email()])
         language = SelectField(
         'Langage',
-        choices=[('fr', 'Francais'), ('ar', 'Arab'), ('en', 'Anglais')])
+        choices=[('fr', 'Francais'), ('ar', 'Arab')])
         algo = SelectField(
         'Algorithme',
-        choices=[('lr', 'Logistic Regression'), ('svc', 'SVC'), ('nb', 'Naive Bayes'), ('rf', 'Random Forest')])
+        choices=[('lr', 'Logistic Regression'), ('svc', 'SVC'), ('nb', 'Naive Bayes'), ('rf', 'Random Forest'), ('knn', 'KNN'), ('ada', 'AdaBoost'), 
+                 ('gb', 'Gradient Boost'), ('xgb', 'XGBoost'), ('st', 'Stacking'), ('vt', 'Voting')])
         time= TextField('Durée de la collecte', validators=[InputRequired()])
     
         submit = SubmitField('Submit')
@@ -53,10 +54,11 @@ class unique_f(FlaskForm):
         email_addr2 = TextField('Enter Your Email2', validators=[InputRequired(), Email()])
         language = SelectField(
         'Langage',
-        choices=[('fr', 'Francais'), ('ar', 'Arab'), ('en', 'Anglais')])
+        choices=[('fr', 'Francais'), ('ar', 'Arab')])
         algo = SelectField(
         'Algorithme',
-        choices=[('lr', 'Logistic Regression'), ('svc', 'SVC'), ('nb', 'Naive Bayes'), ('rf', 'Random Forest')])
+        choices=[('lr', 'Logistic Regression'), ('svc', 'SVC'), ('nb', 'Naive Bayes'), ('rf', 'Random Forest'), ('knn', 'KNN'), ('ada', 'AdaBoost'), 
+                 ('gb', 'Gradient Boost'), ('xgb', 'XGBoost'), ('st', 'Stacking'), ('vt', 'Voting')])
         tweet = TextField('Entrez votre tweet', validators=[InputRequired()])
     
         submit = SubmitField('Submit')
@@ -65,11 +67,11 @@ class Dataset(FlaskForm):
        
         language = SelectField(
         'Langage',
-        choices=[('fr', 'Francais'), ('ar', 'Arabe')])
+        choices=[('fr', 'Francais'), ('ar', 'Arabe'), ('en', 'Anglais'), ('es', 'Espagnol'), ('de', 'Allemand')])
         typef = SelectField(
         'Format',
         choices=[ ('xlsx', 'xlsx'), ('json', 'Json')])
-      
+        
         asc = BooleanField("Suppression des caractères ascii", default = False)
         html_m = BooleanField("Suppression des Markup HTML", default = False)
         special = BooleanField("Suppression des caractères spéciaux", default = False)

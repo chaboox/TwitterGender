@@ -26,6 +26,12 @@
   {{ wtf.form_field(form.email_addr2, class='form-control', placeholder='your@email2.com') }}-->
   {{ wtf.form_field(form.language, class='btn-primary form-control' ) }}
   {{ wtf.form_field(form.algo, class='btn-primary form-control' ) }} 
+   <h5><strong>Ou importez votre propre model</strong></h5>
+   <dl>
+		<p>
+			<input type="file" name="file" class="form-control-file" autocomplete="off" >
+		</p>
+    </dl>
   {{ wtf.form_field(form.time, class='form-control', placeholder='Durée') }}
   <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>

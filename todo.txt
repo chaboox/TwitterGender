@@ -1,0 +1,3 @@
+Import model
+show detail dataset
+see les mot les plus utilisés
