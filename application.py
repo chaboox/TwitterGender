@@ -132,7 +132,7 @@ def datasetr():
     y2 = np.array(y)    
     f = np.count_nonzero(y2 == 0)
     h = np.count_nonzero(y2 == 1)
-    detail = [len(y), f, h]  
+    detail = ['Nombre de tweets: ' + str(len(y)),'Femme: ' + str(f),'Homme: ' + str(h)]  
     #flash(str(request.form))
     if request.method == 'POST':
          return render_template('datasetresult.html', form=form, tweets=tweets, detail=detail)

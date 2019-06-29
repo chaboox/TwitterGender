@@ -21,8 +21,7 @@ display: block;
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Twitter Gender</a>
-    </div>
+ <a class="navbar-brand" href="/static/home.html"><img style="max-width:30px; margin-top: -4px;" src="/static/twitter.png"></a>   </div>
     <ul class="nav navbar-nav">
       <li ><a href="/apprentissage">Apprentissage</a></li>
       <li class="active"><a href="/dataset">Récolte dataset</a></li>
@@ -54,6 +53,19 @@ display: block;
 <dl>
 	
     </dl>
+    <div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong> <p>
+	
+		<ul class=flashes>
+		{% for message in detail %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	 
+</p> </strong>
+  
+</div>
   <div class="table-wrapper-scroll-y my-custom-scrollbar doown">
 <table class="table table-striped" >
   <thead>
@@ -89,10 +101,7 @@ display: block;
  </d1>
  <p><input type=submit class='btn btn-warning btn-block'>
 </form>
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong> {{detail}} </strong>
-</div>
+
 <hr>
 </div>
 {% endblock %}
