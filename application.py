@@ -65,6 +65,7 @@ def bot():
     if request.method == 'POST':
         #return 'Submitted!'
         render_template('botresult.html', form=form)
+    return render_template('bot.html')
 
 @application.route('/unique_result', methods=['GET', 'POST'])
 def result():

@@ -22,13 +22,13 @@
 </html>
   <div class="container">
   
-  <h3>Bienvenu sur l'interface d'apprentissage. Veuillez remplir les champs ci-dessous.</h3>
-  <p>La durée de l'apprentissage dépendra de l'algorithme choisi. Le résultat sera affiché en bas de la page.</p>
+ <!-- <h3>Bienvenu sur l'interface d'apprentissage. Veuillez remplir les champs ci-dessous.</h3>
+  <p>La durée de l'apprentissage dépendra de l'algorithme choisi. Le résultat sera affiché en bas de la page.</p>-->
 <hr>
 <form action="/datasetresult" method="post" class="form" role="form" enctype="multipart/form-data">
   {{ form.csrf_token() }}
  <d1>
-   <h4><strong>Choissisez votre dataset</strong></h4>
+  
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}

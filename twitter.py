@@ -22,8 +22,8 @@ def getTweets(timet):
     y = []
     #maleName = [u'Alain', u'François', u'Julien', u'Stéphane', u'Olivier', u'Leo', u'Mathieu', u'Maxime', u'Thomas', u'Nico']
     #femalName = [u'Jeanne', u'Nathalie', u'Isabelle', u'Lucie', u'Manon', u'Lea', u'Alice', u'Emeline', u'Charlotte', u'Morgane']
-    femalName = [ u'Emeline']
-    maleName = [u'François']
+    femalName = [ u'Lucie']
+    maleName = [u'Alain']
     for male in femalName:
         query = male
         print(male)
@@ -125,7 +125,7 @@ def getTweets2(timet, mannames, womennames, language, mintweet):
     
         body = browser.find_element_by_tag_name('body')
     
-        for ls in range(timet*5):
+        for ls in range(timet*1):
             print(ls)
             body.send_keys(Keys.PAGE_DOWN)
             time.sleep(0.2)
@@ -165,7 +165,7 @@ def getTweets2(timet, mannames, womennames, language, mintweet):
     
         body = browser.find_element_by_tag_name('body')
     
-        for ls in range(timet*5):
+        for ls in range(timet*1):
             print(ls)
             body.send_keys(Keys.PAGE_DOWN)
             time.sleep(0.2)
